@@ -5,5 +5,11 @@
       "src": "api/*.ts",
       "use": "@vercel/node"
     }
+  ],
+  "routes": [
+    {
+      "src": "/api/brain",
+      "dest": "/api/parse-wechat-message.ts"
+    }
   ]
 }
