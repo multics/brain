@@ -1,7 +1,31 @@
+import { azure } from '@ai-sdk/azure'
+import { createAzure } from '@ai-sdk/azure'
+import { generateText } from "ai"
+
+const azureClient = createAzure({
+  apiVersion: '2025-01-01-preview',
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: process.env.AZURE_BASE_URL,
+  // resourceName: "matterai-dev-aiagent-eastus",
+})
+
+const model = azureClient('gpt-4o-mini-0718')
+
 export default async function handler(req, res) {
 
-  res.status(200).json({ error: 'Not implemented' })
-  return
+  try {
+    const { text } = await generateText({
+      model: azureClient('gpt-4o-mini-0718'),
+      prompt: "What is love?"
+    })
+
+    res.status(200).json({ love: text })
+    return
+
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+    return
+  }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' })
