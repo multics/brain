@@ -44,7 +44,7 @@ export default async function handler(req, res) {
       messages,
     })
 
-    res.status(200).json({ text })
+    res.status(200).json(JSON.parse(text))
     return
 
   } catch (e) {
